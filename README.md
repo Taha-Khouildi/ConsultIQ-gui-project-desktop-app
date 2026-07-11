@@ -1,83 +1,77 @@
-# Tunisnap — 2D Platformer (C / SDL)
+# ConsultIQ — Consulting Firm Management (Qt / C++ Desktop App)
 
-A 2D side-scrolling platformer written in **C** with **SDL 1.2**, built as a first-year
-project at [Esprit](https://esprit.tn). The game features multiple levels, animated
-combat, in-game puzzles, a minimap, and a save/load system.
+> **Archived academic project.** Built as a 2nd-year integrated project (2A) at
+> [Esprit](https://esprit.tn) by a team of six. It is no longer maintained and is
+> published here as a portfolio artifact.
 
-![Menu screen](image_menu/background%201.jpg)
+A Windows desktop application for managing a consulting firm — clients, appointments,
+projects, invoicing, staff, and reporting — built with **Qt 6 / C++17** on a SQL backend
+via ODBC. The project also includes an **Arduino** module driving fire and gas sensors
+with an LCD display and buzzer alarm.
 
-> _Replace the image above with an actual gameplay screenshot when you get the chance —
-> a shot showing the hero, enemies, and HUD in a level will sell the project better than
-> the menu backdrop._
+## My contribution
 
-## About
+I built the **Client Management** module:
 
-Tunisnap is a level-based platformer. You control a hero who runs, jumps, and attacks
-through hand-built levels while solving puzzles (_enigmes_) to progress. Progress is
-tracked per player via a name-based save system, so you can pick up where you left off.
+- `client.{h,cpp}` — the `Client` entity and its data layer (add, list, delete, update),
+  backed by `QSqlQueryModel`
+- `newclient.{h,cpp,ui}` — the add-client dialog
+- `mainwindow.{h,cpp,ui}` — the client list view: table of clients, add, and delete with
+  row selection and confirmation dialogs
 
-## Features
+## Team & modules
 
-- Multiple hand-designed levels with scrolling backgrounds
-- Player animations: idle, run, jump, and attack
-- Enemies with health and collision handling (pixel-perfect collision)
-- In-game puzzles (_enigmes_) gating progression
-- Minimap overlay
-- Save / load system tied to a player name
-- Menu system (Play / Settings / Quit) with background music and sound effects
-
-## Controls
-
-| Key            | Action              |
-| -------------- | ------------------- |
-| ← / →          | Move left / right   |
-| Space          | Jump                |
-| X              | Attack              |
-| Escape         | Return to main menu |
-
-At launch you're prompted to enter a player name, which is used to save your progress.
+| Member                  | Module                           |
+| ----------------------- | -------------------------------- |
+| Taha Khouildi           | Client Management                |
+| Ines Skhiri             | Appointment Scheduling           |
+| Oussama Ajmi            | Project & Task Management        |
+| Rahma Hassine           | Payment & Invoicing              |
+| Chaima Larbi            | Employee / Consultant Management |
+| Mohamed Ridha Ben Mnedi | Reporting & Analytics            |
 
 ## Tech stack
 
-- **Language:** C
-- **Graphics / input:** SDL 1.2
-- **Images:** SDL_image
-- **Text / fonts:** SDL_ttf
-- **Audio:** SDL_mixer
+- **Language:** C++17
+- **Framework:** Qt 6 (Widgets, SQL)
+- **Database:** SQL via `QODBC` (ODBC data source)
+- **Styling:** custom Qt stylesheet (`style.qss`)
+- **Hardware:** Arduino — flame + smoke sensors, I2C LCD, buzzer (`fire_gas_detection.ino`)
+
+## Repository layout
+
+This repository contains **two Qt project files**, from two workstreams developed in
+parallel:
+
+| Project file                 | Builds                                                     |
+| ---------------------------- | ---------------------------------------------------------- |
+| `ClientManagementSystem.pro` | **The Client Management module — this is the one to open.** |
+| `ConsultIQ.pro`              | The invoicing / payments workstream (separate module set).  |
+
+The `MainWindow` in this repository is the **Client Management** screen, so it builds
+under `ClientManagementSystem.pro`. Opening `ConsultIQ.pro` instead will not compile,
+since that project does not include `client.cpp` / `newclient.cpp`.
 
 ## Build & run
 
-This project targets the legacy **SDL 1.2** libraries. On Debian/Ubuntu:
+Requires **Qt 6** with the Widgets and SQL modules, and a C++17 compiler (developed with
+MinGW 64-bit on Windows).
 
-```bash
-sudo apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-ttf2.0-dev libsdl-mixer1.2-dev
-```
+1. Open **`ClientManagementSystem.pro`** in Qt Creator.
+2. Configure an **ODBC data source** named `Source_Projet2A` pointing at the project
+   database.
+3. Set your database credentials in `connection.cpp` (`setUserName` / `setPassword`).
+   The committed password field is intentionally left blank — credentials are not stored
+   in this repository.
+4. Build and run.
 
-Then build and run from the project root:
+## Arduino module
 
-```bash
-make
-./prog
-```
-
-The executable expects to be run from the project root so it can find the `image_menu/`,
-`image_level/`, `son/`, and `sprites/` asset folders using relative paths.
-
-## Project structure
-
-| Area            | Files                                                        |
-| --------------- | ----------------------------------------------------------- |
-| Entry point     | `main.c`                                                     |
-| Player          | `player.c`, `input.c`                                        |
-| Enemies         | `enemy.c`                                                    |
-| Collision       | `collisionPP.c` (pixel-perfect)                             |
-| World / camera  | `background.c`, `scrolling.c`, `minimap.c`                  |
-| Puzzles         | `enigme.c`, `enigme6.c`                                      |
-| Save system     | `sauvegarde.c`, `sauv.c`                                     |
-| Timing          | `temps.c`                                                    |
-| Shared helpers  | `fonction.c`                                                 |
+`fire_gas_detection.ino` reads a flame sensor and a smoke/gas sensor, shows the current
+status on an I2C LCD (`NO DANGER`, `FIRE DETECTED`, `GAS DETECTED`, `FIRE & GAS ALERT`),
+and triggers a buzzer when either is detected.
 
 ## Notes
 
-Built as an academic project to practice C fundamentals, modular design, and real-time
-game programming with SDL. Some in-code comments are in French and Tunisian Arabic.
+Parts of the code and comments are in French. As an academic project delivered under a
+course deadline, the codebase reflects those constraints rather than production standards.
