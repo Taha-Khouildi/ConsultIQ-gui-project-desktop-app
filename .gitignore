@@ -1,0 +1,23 @@
+# Build output
+build/
+*.o
+*.obj
+*.exe
+
+# Qt generated files
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qmake.stash
+.qmake.stash
+
+# Qt Creator user-specific settings (machine paths, session state)
+*.pro.user
+*.pro.user.*
+*.autosave
+
+# OS / editor cruft
+.DS_Store
+*~
+*.swp

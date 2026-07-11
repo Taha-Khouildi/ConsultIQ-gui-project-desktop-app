@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "connection.h"
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -16,7 +15,7 @@ bool Connection::createConnection()
     qDebug() << "Attempting to connect via ODBC Source:" << "Source_Projet2A";
     db.setDatabaseName("Source_Projet2A"); // ODBC Data Source Name (DSN)
     db.setUserName("consultiq");
-    db.setPassword("hexacore"); // Consider safer ways to handle passwords in production
+    db.setPassword(""); // TODO: set your DB password here — do not commit real credentials
 
 
     db.setConnectOptions("SQL_ATTR_NOSCAN=1");
@@ -59,24 +58,3 @@ void Connection::closeConnection() {
     QSqlDatabase::removeDatabase(connectionName); // Remove it from Qt's list
     qDebug() << "Removed database connection:" << connectionName;
 }
-=======
-#include "connection.h"
-
-Connection::Connection(){}
-
-bool Connection::createconnect()
-{bool test=false;
-    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
-    db.setDatabaseName("Source_Projet2A");//inserer le nom de la source de données
-    db.setUserName("consultiq");//inserer nom de l'utilisateur
-    db.setPassword("hexacore");//inserer mot de passe de cet utilisateur
-
-    if (db.open())
-        test=true;
-
-    return  test;
-}
-
-
-void Connection::closeConnection(){db.close();}
->>>>>>> dda11e097df4406bc6cbcd6cfed77643a4845011
