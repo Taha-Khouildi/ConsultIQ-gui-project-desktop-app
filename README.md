@@ -9,6 +9,8 @@ projects, invoicing, staff, and reporting — built with **Qt 6 / C++17** on a S
 via ODBC. The project also includes an **Arduino** module driving fire and gas sensors
 with an LCD display and buzzer alarm.
 
+![ConsultIQ home screen showing the six feature modules](docs/screenshots/home.png)
+
 ## My contribution
 
 I built the **Client Management** module:
@@ -18,6 +20,20 @@ I built the **Client Management** module:
 - `newclient.{h,cpp,ui}` — the add-client dialog
 - `mainwindow.{h,cpp,ui}` — the client list view: table of clients, add, and delete with
   row selection and confirmation dialogs
+
+### Client list
+
+The main view — clients loaded into a `QTableView` backed by `QSqlQueryModel`, with
+filtering by column, row-selection actions (modify, delete, history), and an Excel export.
+
+![Client Management window listing clients in a table with add, modify and delete actions](docs/screenshots/clients-list.png)
+
+### Add a client
+
+The add-client dialog. Input is validated before insert, and the table model refreshes on
+success.
+
+![Add New Client dialog with fields for ID, name, email, country, contact number and occupation](docs/screenshots/add-client.png)
 
 ## Team & modules
 
@@ -64,6 +80,13 @@ MinGW 64-bit on Windows).
    The committed password field is intentionally left blank — credentials are not stored
    in this repository.
 4. Build and run.
+
+<details>
+<summary>Login screen</summary>
+
+![ConsultIQ login screen](docs/screenshots/login.png)
+
+</details>
 
 ## Arduino module
 
